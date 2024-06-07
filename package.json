@@ -1,0 +1,59 @@
+{
+  "name": "@salman3001/nest-policy-module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "rimraf dist && tsc",
+    "prepublish": "npm run build"
+  },
+  "files": [
+    "/dist",
+    "package.json",
+    "README.md"
+  ],
+  "keywords": [
+    "nest js",
+    "policies",
+    "permissions",
+    "access control",
+    "authorization"
+  ],
+  "author": "salman",
+  "license": "ISC",
+  "repository": {
+    "url": "https://github.com/salman3001/nest-policy-module"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.3.9",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^10.3.9",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.0",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.4.5",
+    "ts-jest": "^29.1.4",
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node"
+  }
+}
