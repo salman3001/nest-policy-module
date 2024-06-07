@@ -11,6 +11,7 @@ export class PolicyModule {
       providers: [
         { provide: PolicyService, useValue: new PolicyService(policy) },
       ],
+      exports: [PolicyService],
     };
   }
 }
