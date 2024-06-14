@@ -17,7 +17,7 @@ export class PolicyModule {
           useValue: new PolicyService(p.policy),
         })),
       ],
-      exports: [PolicyService],
+      exports: [...opt.map((p) => p.token)],
     };
   }
 }
