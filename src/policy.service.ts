@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { NestPolicyError } from './exceptions/NestPolicyError';
 
 @Injectable()
 export class PolicyService<
@@ -18,7 +19,7 @@ export class PolicyService<
     if (typeof policyFunction === 'function') {
       const isValid = policyFunction(...args);
       if (!isValid) {
-        throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+        throw new NestPolicyError();
       }
       return isValid;
     }

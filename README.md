@@ -61,7 +61,25 @@ export class UserService {
 }
 ```
 
-- authorize method returns true if policy passes the provided logic otherwise throws HttpAcception with unauthorized status code.
+- authorize method returns true if policy passes the provided logic otherwise throws NestPolicyError which extends HttpExceptions with unauthorized status code. You can catch this error in global exception filer like this
+
+```typescript
+import { NestPolicyError } from '@salman3001/nest-policy-module';
+
+@Catch()
+export class GlobalHttpExceptionsFilter implements ExceptionFilter {
+  catch(exception: unknown, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+
+    if (exception instanceof NestPolicyError) {
+      const status = exception.getStatus();
+      const message = exception.message;
+      //.. return custom error
+    }
+  }
+}
+```
 
 - type hints will be provided by typescript
 
