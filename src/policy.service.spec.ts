@@ -12,17 +12,25 @@ describe('ConfigService', () => {
   };
 
   let service: PolicyService<typeof myPolicy>;
+  let service2: PolicyService<typeof myPolicy>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PolicyModule.register(myPolicy)],
+      imports: [
+        PolicyModule.register([
+          { token: 'MyPolicy', policy: myPolicy },
+          { token: 'myAnotherPolicy', policy: myPolicy },
+        ]),
+      ],
     }).compile();
 
-    service = module.get(PolicyService);
+    service = module.get('MyPolicy');
+    service2 = module.get('myAnotherPolicy');
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(service2).toBeDefined();
   });
 
   it('should fail', () => {
@@ -37,6 +45,9 @@ describe('ConfigService', () => {
   it('should pass', () => {
     expect(
       service.authorize('hasPermission', { id: 1 }, { userId: 1 }),
+    ).toBeTruthy();
+    expect(
+      service2.authorize('hasPermission', { id: 1 }, { userId: 1 }),
     ).toBeTruthy();
   });
 });

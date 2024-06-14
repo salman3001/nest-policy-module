@@ -18,7 +18,10 @@ import { myPolicy } from './policies'
 
 
 imports: [
-  PolicyModule.register(myPolicy)
+  PolicyModule.register([
+    { token: 'MyPolicy', policy: myPolicy },
+    { token: 'SomeOtherPolicy', policy: someOtherPolicy }
+  ])
   ],
 
 ```
@@ -41,22 +44,21 @@ export type IMypolicy = typeof myPolicy; // <-- export the type from here as it 
 
 ```typescript
 import { PolicyService } from '@salman3001/nest-policy-module';
-import { myPolicy } from './policies'
-
+import { myPolicy } from './policies';
 
 export class UserService {
   constructor(
-    private readonly policyService: PolicyService<typeof IMypolicy> // provide generic for typehints,
-  ) {
+    @Inject('MyPolicy')
+    private readonly policyService: PolicyService<typeof IMypolicy>, // provide generic for typehints,
+  ) {}
 
-   anyMethod() {
-   const isAlowed =  this.policyService.authorize('isAdmin', { role: 'admin' });
-    }
-  // or
-  const isAlowed =  this.policyService.authorize('view', { role: 'admin' });
-    }
+  anyMethod() {
+    this.policyService.authorize('isAdmin', { role: 'admin' });
+
+    // or
+    this.policyService.authorize('view', anyResource);
   }
-
+}
 ```
 
 - authorize method returns true if policy passes the provided logic otherwise throws HttpAcception with unauthorized status code.
