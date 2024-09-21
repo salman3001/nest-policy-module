@@ -3,7 +3,7 @@ import { PolicyService } from './policy.service';
 
 type PolicyOptions = {
   token: string;
-  policy: Record<string, (...args: any[]) => boolean>;
+  policy: Record<string, (...args: any[]) => boolean | Promise<boolean>>;
 }[];
 
 @Module({})
