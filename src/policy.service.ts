@@ -3,7 +3,7 @@ import { NestPolicyError } from './exceptions/NestPolicyError';
 
 @Injectable()
 export class PolicyService<
-  T extends Record<string, (...args: any[]) => boolean>,
+  T extends Record<string, (...args: any[]) => boolean | Promise<boolean>>,
 > {
   private policy: T;
 
@@ -11,13 +11,13 @@ export class PolicyService<
     this.policy = policy;
   }
 
-  authorize<K extends keyof T>(
+  async authorize<K extends keyof T>(
     policyKey: K,
     ...args: Parameters<T[K]>
-  ): boolean {
+  ): Promise<boolean> {
     const policyFunction = this.policy[policyKey];
     if (typeof policyFunction === 'function') {
-      const isValid = policyFunction(...args);
+      const isValid = await policyFunction(...args);
       if (!isValid) {
         throw new NestPolicyError();
       }

@@ -49,14 +49,14 @@ import { myPolicy } from './policies';
 export class UserService {
   constructor(
     @Inject('MyPolicy')
-    private readonly policyService: PolicyService<typeof IMypolicy>, // provide generic for typehints,
+    private readonly policyService: PolicyService<IMypolicy>, // provide generic for typehints,
   ) {}
 
   anyMethod() {
-    this.policyService.authorize('isAdmin', { role: 'admin' });
+    await this.policyService.authorize('isAdmin', { role: 'admin' });
 
     // or
-    this.policyService.authorize('view', anyResource);
+    await this.policyService.authorize('view', anyResource);
   }
 }
 ```

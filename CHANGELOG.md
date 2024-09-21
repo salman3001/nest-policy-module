@@ -9,3 +9,10 @@
 ### Added
 
 - Initial implementation.
+
+## v2.0.0 - 2024-09-21
+
+### Breaking Chnages
+
+- Assed Async functions support, Polcies function can be sync and async as well
+- updated docs

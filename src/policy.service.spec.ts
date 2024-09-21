@@ -33,21 +33,21 @@ describe('ConfigService', () => {
     expect(service2).toBeDefined();
   });
 
-  it('should fail', () => {
+  it('should fail', async () => {
     expect.assertions(1);
     try {
-      service.authorize('isAdmin', { role: 'customer' });
+      await service.authorize('isAdmin', { role: 'customer' });
     } catch (error) {
       expect(error).toBeInstanceOf(HttpException);
     }
   });
 
-  it('should pass', () => {
+  it('should pass', async () => {
     expect(
-      service.authorize('hasPermission', { id: 1 }, { userId: 1 }),
+      await service.authorize('hasPermission', { id: 1 }, { userId: 1 }),
     ).toBeTruthy();
     expect(
-      service2.authorize('hasPermission', { id: 1 }, { userId: 1 }),
+      await service2.authorize('hasPermission', { id: 1 }, { userId: 1 }),
     ).toBeTruthy();
   });
 });
